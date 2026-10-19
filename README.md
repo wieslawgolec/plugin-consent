@@ -4,7 +4,7 @@ Purpose-based **consent ledger** and public **preference page** for **Mautic 7.2
 
 ### Complementary by design
 
-This plugin is **intentionally complementary** to core Mautic and to the community **“Marketing without surveillance”** initiative (NLnet-funded; **early design phase**).
+This plugin is **intentionally complementary** to core Mautic and to the community **[Marketing without surveillance](https://mautic.org/blog/marketing-without-surveillance-funded-by-nlnet)** initiative (NLnet-funded; **early design phase** — [forum announcement](https://forum.mautic.org/t/marketing-without-surveillance-funded-by-nlnet/38502)).
 
 | This plugin | Core / “Marketing without surveillance” |
 |-------------|------------------------------------------|
@@ -18,7 +18,7 @@ This plugin is **intentionally complementary** to core Mautic and to the communi
 * Admin tracking privacy centre  
 * Replacement of core **Do Not Contact** (DNC), frequency rules, or unsubscribe  
 
-Those capabilities stay with **core Mautic** and/or the **“Marketing without surveillance”** project as it moves from early design into implementation. Use this plugin for purpose-based marketing consent only; do not treat it as a full privacy or CMP product.
+Those capabilities stay with **core Mautic** and/or the **[Marketing without surveillance](https://mautic.org/blog/marketing-without-surveillance-funded-by-nlnet)** project as it moves from early design into implementation. Use this plugin for purpose-based marketing consent only; do not treat it as a full privacy or CMP product.
 
 |  |  |
 |--|--|
@@ -44,7 +44,7 @@ Those capabilities stay with **core Mautic** and/or the **“Marketing without s
 | Explicitly **not** in this plugin | Reason |
 |----------------------------------|--------|
 | Cookie CMP / script blocking | Website / CMP concern; out of scope |
-| Admin tracking privacy centre | Core / “Marketing without surveillance” (early design phase) |
+| Admin tracking privacy centre | Core / [Marketing without surveillance](https://mautic.org/blog/marketing-without-surveillance-funded-by-nlnet) (early design phase) |
 | Replacing core DNC or frequency rules | Core features — this plugin only *adds* purpose consent |
 | Replacing core unsubscribe / preference-center pages | Core features — this plugin’s preference page is purpose-only |
 | Full DSAR / erasure product | Separate legal/process tooling |
