@@ -1,0 +1,66 @@
+{% extends '@MauticCore/Default/content.html.twig' %}
+
+{% block headerTitle %}Grant or withdraw consent{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <p class="text-muted">
+            Manual admin updates are recorded with source <code>admin</code>.
+            Prefer form capture or the public preference page when possible.
+        </p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Grant</h4>
+                <form method="post" action="{{ path('mautic_consent_grant') }}">
+                    <div class="form-group">
+                        <label for="grant_contact_id">Contact ID</label>
+                        <input class="form-control" type="number" name="contact_id" id="grant_contact_id"
+                               required value="{{ contact_id|default('') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="grant_purpose">Purpose</label>
+                        <select class="form-control" name="purpose_alias" id="grant_purpose" required>
+                            {% for p in purposes %}
+                                <option value="{{ p.alias }}">{{ p.name }} ({{ p.alias }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="grant_notes">Notes</label>
+                        <input class="form-control" type="text" name="notes" id="grant_notes">
+                    </div>
+                    <button type="submit" class="btn btn-success">Grant consent</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h4>Withdraw</h4>
+                <form method="post" action="{{ path('mautic_consent_withdraw') }}">
+                    <div class="form-group">
+                        <label for="wd_contact_id">Contact ID</label>
+                        <input class="form-control" type="number" name="contact_id" id="wd_contact_id"
+                               required value="{{ contact_id|default('') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="wd_purpose">Purpose</label>
+                        <select class="form-control" name="purpose_alias" id="wd_purpose" required>
+                            {% for p in purposes %}
+                                <option value="{{ p.alias }}">{{ p.name }} ({{ p.alias }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="wd_notes">Notes</label>
+                        <input class="form-control" type="text" name="notes" id="wd_notes">
+                    </div>
+                    <button type="submit" class="btn btn-warning">Withdraw consent</button>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+        <a href="{{ path('mautic_consent_index') }}" class="btn btn-default">Back to records</a>
+    </div>
+</div>
+{% endblock %}

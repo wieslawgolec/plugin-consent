@@ -1,0 +1,73 @@
+{% extends '@MauticCore/Default/content.html.twig' %}
+
+{% block headerTitle %}{{ 'mautic.consent.purposes'|default('Consent purposes')|trans }}{% endblock %}
+
+{% block actions %}
+    <a href="{{ path('mautic_consent_purpose_new') }}" class="btn btn-primary">
+        <i class="ri-add-line"></i> {{ 'mautic.core.form.new'|default('New')|trans }}
+    </a>
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <p class="text-muted mb-md">
+            Define processing purposes (e.g. newsletter, product updates, SMS).
+            Consent records are stored separately and do not replace Do Not Contact or email categories.
+            Tracking cookies and the admin privacy centre stay under core Mautic settings.
+        </p>
+
+        {% if items is empty %}
+            <div class="alert alert-info">No purposes yet. Create one to start collecting consent.</div>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover purpose-list">
+                    <thead>
+                        <tr>
+                            <th>{{ 'mautic.core.name'|default('Name')|trans }}</th>
+                            <th>Alias</th>
+                            <th>Legal basis</th>
+                            <th>Channel</th>
+                            <th>Version</th>
+                            <th>Required</th>
+                            <th>Published</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('mautic_consent_purpose_edit', {id: item.id}) }}">
+                                    <strong>{{ item.name }}</strong>
+                                </a>
+                                {% if item.description %}
+                                    <div class="text-muted small">{{ item.description|striptags|slice(0, 80) }}</div>
+                                {% endif %}
+                            </td>
+                            <td><code>{{ item.alias }}</code></td>
+                            <td>{{ item.legalBasis }}</td>
+                            <td>{{ item.channelHint|default('—') }}</td>
+                            <td><span class="label label-default">v{{ item.version }}</span></td>
+                            <td>{% if item.required %}<i class="ri-check-line text-success"></i>{% else %}—{% endif %}</td>
+                            <td>
+                                {% if item.isPublished %}
+                                    <span class="label label-success">published</span>
+                                {% else %}
+                                    <span class="label label-default">draft</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-right text-nowrap">
+                                <a class="btn btn-default btn-xs" href="{{ path('mautic_consent_purpose_edit', {id: item.id}) }}">Edit</a>
+                                <a class="btn btn-danger btn-xs" href="{{ path('mautic_consent_purpose_delete', {id: item.id}) }}"
+                                   onclick="return confirm('Delete this purpose?');">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

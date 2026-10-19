@@ -1,0 +1,86 @@
+{% extends '@MauticCore/Default/content.html.twig' %}
+
+{% block headerTitle %}
+    {% if entity.id %}Edit purpose: {{ entity.name }}{% else %}New consent purpose{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form method="post" class="consent-purpose-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Name <span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" name="name" id="name" required value="{{ entity.name|default('') }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="alias">Alias <span class="text-danger">*</span></label>
+                        <input class="form-control" type="text" name="alias" id="alias" required value="{{ entity.alias|default('') }}" placeholder="newsletter">
+                        <p class="help-block">Stable key for forms and segments (field name: consent_{alias}).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" id="description" rows="2">{{ entity.description|default('') }}</textarea>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="legalBasis">Legal basis</label>
+                        <select class="form-control" name="legalBasis" id="legalBasis">
+                            {% set bases = {'consent':'Consent','contract':'Contract','legal_obligation':'Legal obligation','vital_interests':'Vital interests','public_task':'Public task','legitimate_interest':'Legitimate interest'} %}
+                            {% for val, label in bases %}
+                                <option value="{{ val }}" {% if entity.legalBasis == val %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="channelHint">Channel hint</label>
+                        <select class="form-control" name="channelHint" id="channelHint">
+                            {% set channels = {'':'Any','email':'Email','sms':'SMS','whatsapp':'WhatsApp','tracking':'Tracking','other':'Other'} %}
+                            {% for val, label in channels %}
+                                <option value="{{ val }}" {% if entity.channelHint == val %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="version">Version</label>
+                        <input class="form-control" type="number" min="1" name="version" id="version" value="{{ entity.version|default(1) }}">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="order">Order</label>
+                        <input class="form-control" type="number" name="order" id="order" value="{{ entity.order|default(0) }}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="policyText">Policy / disclosure text</label>
+                <textarea class="form-control" name="policyText" id="policyText" rows="4">{{ entity.policyText|default('') }}</textarea>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="required" value="1" {% if entity.required %}checked{% endif %}> Required on forms
+                </label>
+                &nbsp;
+                <label class="checkbox-inline">
+                    <input type="checkbox" name="isPublished" value="1" {% if entity.isPublished is not defined or entity.isPublished %}checked{% endif %}> Published
+                </label>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a href="{{ path('mautic_consent_purpose_index') }}" class="btn btn-default">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{
+    "name": "wieslawgolec/plugin-consent",
+    "description": "Consent ledger + admin UI + preference page for Mautic 7.2+ (complements core privacy/tracking; does not replace DNC).",
+    "type": "mautic-plugin",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Wieslaw Golec",
+            "homepage": "https://github.com/wieslawgolec"
+        }
+    ],
+    "require": {
+        "php": ">=8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "MauticPlugin\\MauticConsentBundle\\": ""
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MauticPlugin\\MauticConsentBundle\\Tests\\": "Tests/"
+        }
+    },
+    "minimum-stability": "stable"
+}

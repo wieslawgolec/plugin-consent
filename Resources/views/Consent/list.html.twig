@@ -1,0 +1,82 @@
+{% extends '@MauticCore/Default/content.html.twig' %}
+
+{% block headerTitle %}
+    {% if contact_id %}
+        Consent records — contact #{{ contact_id }}
+    {% else %}
+        {{ 'mautic.consent.records'|default('Consent records')|trans }}
+    {% endif %}
+{% endblock %}
+
+{% block actions %}
+    <a href="{{ path('mautic_consent_manage') }}" class="btn btn-primary">
+        <i class="ri-edit-line"></i> Grant / withdraw
+    </a>
+    <a href="{{ path('mautic_consent_purpose_index') }}" class="btn btn-default">
+        Manage purposes
+    </a>
+{% endblock %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-body">
+        {% if error is defined and error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        {% if items is empty %}
+            <div class="alert alert-info">No consent records found.</div>
+        {% else %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Contact</th>
+                            <th>Purpose</th>
+                            <th>Status</th>
+                            <th>Version</th>
+                            <th>Source</th>
+                            <th>Granted</th>
+                            <th>Withdrawn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>
+                                <a href="{{ path('mautic_consent_contact', {contactId: item.contactId}) }}">
+                                    #{{ item.contactId }}
+                                </a>
+                            </td>
+                            <td>
+                                {% set p = purposes[item.purposeId]|default(null) %}
+                                {% if p %}
+                                    {{ p.name }} <code class="small">{{ p.alias }}</code>
+                                {% else %}
+                                    #{{ item.purposeId }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.status == 'granted' %}
+                                    <span class="label label-success">granted</span>
+                                {% elseif item.status == 'withdrawn' %}
+                                    <span class="label label-warning">withdrawn</span>
+                                {% else %}
+                                    <span class="label label-default">{{ item.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>v{{ item.purposeVersion }}</td>
+                            <td>{{ item.source }}{% if item.sourceDetail %} <span class="text-muted small">({{ item.sourceDetail }})</span>{% endif %}</td>
+                            <td>{{ item.grantedAt ? item.grantedAt|date('Y-m-d H:i') : '—' }}</td>
+                            <td>{{ item.withdrawnAt ? item.withdrawnAt|date('Y-m-d H:i') : '—' }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
